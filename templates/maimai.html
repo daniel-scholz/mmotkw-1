@@ -8,11 +8,11 @@
 	<body>
 		<div class="navigate">
 			<div class="card" id="prev" onclick="window.location.href=`CW_${Number({{.KW}})-1}`">
-				< prev
+				< zurück
 			</div>
-			<div class="card" onclick="window.location.href='\/'">Overview</div>
+			<div class="card" onclick="window.location.href='\/'">Übersicht</div>
 			<div id="next" class="card" onclick="window.location.href=`CW_${Number({{.KW}})+1}`">
-				next >
+				vor >
 			</div>
 		</div>
 		<!-- {{if .IsCurrentWeek}}
