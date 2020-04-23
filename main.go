@@ -122,12 +122,12 @@ func main() {
 			return
 		}
 	}
+
 	maimai := func(cw string, maimaisInCW Week) func(http.ResponseWriter, *http.Request) {
 
 		return func(w http.ResponseWriter, r *http.Request) {
 
 			tmpl, err = template.ParseFiles("templates/maimai.html")
-			// maimais, err := getMaimais(*directory, "mm")
 			if err != nil {
 				log.Fatalln(err)
 				return
@@ -138,6 +138,7 @@ func main() {
 			}
 		}
 	}
+
 	vote := func(maimaisInCW Week) func(http.ResponseWriter, *http.Request) {
 
 		return func(w http.ResponseWriter, r *http.Request) {
@@ -155,6 +156,7 @@ func main() {
 	http.Handle("/mm/", http.StripPrefix("/mm/", fs2))
 
 	http.HandleFunc("/", index)
+
 	maimaiList, err := ioutil.ReadDir(*directory)
 	for i, w := range maimaiList {
 
