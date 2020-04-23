@@ -38,7 +38,7 @@ func getMaimais(baseDir string, pathPrefix string) ([]Week, error) {
 		week, err := getMaiMaiPerCW(pathPrefix, w)
 
 		if err != nil {
-			fmt.Println(err)
+			log.Fatalln(err)
 		}
 		sort.Slice(week.Maimais[:], func(i, j int) bool {
 			return week.Maimais[i].Time.After(week.Maimais[j].Time)
@@ -119,12 +119,12 @@ func main() {
 			fmt.Println(err)
 		}
 	}
+
 	maimai := func(cw string, maimaisInCW Week) func(http.ResponseWriter, *http.Request) {
 
 		return func(w http.ResponseWriter, r *http.Request) {
 
 			tmpl, err = template.ParseFiles("templates/maimai.html")
-			// maimais, err := getMaimais(*directory, "mm")
 			if err != nil {
 				log.Fatalln(err)
 			}
@@ -134,6 +134,7 @@ func main() {
 			}
 		}
 	}
+
 	vote := func(maimaisInCW Week) func(http.ResponseWriter, *http.Request) {
 
 		return func(w http.ResponseWriter, r *http.Request) {
@@ -152,12 +153,13 @@ func main() {
 	http.Handle("/mm/", http.StripPrefix("/mm/", fs2))
 
 	http.HandleFunc("/", index)
+
 	maimaiList, err := ioutil.ReadDir(*directory)
 	for i, w := range maimaiList {
 
 		maimaisInCW, err := getMaiMaiPerCW("mm", filepath.Join(*directory, w.Name()))
 		if err != nil {
-			fmt.Println(err)
+			log.Fatalln(err)
 		}
 
 		// last week is the current one.
